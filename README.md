@@ -180,8 +180,6 @@ function formatISODateTime(d){
 
 参照) [**Garoon REST APIの共通仕様 – cybozu developer network**](https://developer.cybozu.io/hc/ja/articles/360000503306-Garoon-REST-API%E3%81%AE%E5%85%B1%E9%80%9A%E4%BB%95%E6%A7%98#step4)
 
-[](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cpath fill='%2336b' d='M5.002 1.01h7v7l-2-2-3 2v-1l3-2.25 1 1V2.01h-3.75l1 1-2.25 3h-1l2-3z'/%3E%3Cpath fill='%2336b' d='M7.002 3.01h-5v8h8v-5h-1v4h-6v-6h4z'/%3E%3Cpath fill='%2315a5ea' d='M4.082 5.51c0-.621.621-.621.621-.621 1.864.621 3.107 1.864 3.728 3.728 0 0 0 .621-.62.621-1.245-1.864-1.866-2.485-3.73-3.728z'/%3E%3C/svg%3E)
-
 仕組みとしては、GoogleカレンダーにタグとしてガルーンのeventIdとrepeatIdを組み合わせたものを保存することで、ガルーンの予定との対応を保存している。 repeatIdに関してはまだドキュメントに載っていないので、将来の仕様変更はあるかもしれないが、スクリプトを作れたのはこのrepeatIdのおかげ。
 
 また、各予定にタグとしてガルーンとの同期日時を記録することで、途中でエラー(「短時間に作成したカレンダーまたはカレンダーの予定の数が多すぎます。しばらくしてからもう一度お試しください。」など)が発生したあとに再実行する際に、予定を作り直す回数を少なくしている。
@@ -228,17 +226,12 @@ Googleカレンダーのほうが意外とすぐに制限に引っかかるの�
 
 サイボウズ公式で、Javaで動作するサンプルプログラム([**Googleカレンダー連携 - Garoonの予定をGoogleカレンダーに表示 - – cybozu developer network**](https://developer.cybozu.io/hc/ja/articles/204426680-Google%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC%E9%80%A3%E6%90%BA-Garoon%E3%81%AE%E4%BA%88%E5%AE%9A%E3%82%92Google%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC%E3%81%AB%E8%A1%A8%E7%A4%BA-))は当然うまく動作する。
 
-[](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cpath fill='%2336b' d='M5.002 1.01h7v7l-2-2-3 2v-1l3-2.25 1 1V2.01h-3.75l1 1-2.25 3h-1l2-3z'/%3E%3Cpath fill='%2336b' d='M7.002 3.01h-5v8h8v-5h-1v4h-6v-6h4z'/%3E%3Cpath fill='%2315a5ea' d='M4.082 5.51c0-.621.621-.621.621-.621 1.864.621 3.107 1.864 3.728 3.728 0 0 0 .621-.62.621-1.245-1.864-1.866-2.485-3.73-3.728z'/%3E%3C/svg%3E)
-
 しかしながら
 
 - 動作させるまでの手順が多い
 - 自動で同期させるためには24時間稼働のマシンを用意して、cronなどでタスクを設定する必要がある
 - サービスアカウントはドメインのメンバーではない(参考: [**サービス アカウント | Cloud IAM のドキュメント | Google Cloud**](https://cloud.google.com/iam/docs/service-accounts?hl=ja))ため、Google Workspaceの設定でカレンダーの「予備カレンダーの外部共有オプション」を「すべての情報を共有する (外部ユーザーにカレンダーの変更を許可する)」に設定する必要がある
     
-    [](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cpath fill='%2336b' d='M5.002 1.01h7v7l-2-2-3 2v-1l3-2.25 1 1V2.01h-3.75l1 1-2.25 3h-1l2-3z'/%3E%3Cpath fill='%2336b' d='M7.002 3.01h-5v8h8v-5h-1v4h-6v-6h4z'/%3E%3Cpath fill='%2315a5ea' d='M4.082 5.51c0-.621.621-.621.621-.621 1.864.621 3.107 1.864 3.728 3.728 0 0 0 .621-.62.621-1.245-1.864-1.866-2.485-3.73-3.728z'/%3E%3C/svg%3E)
-    
-
 といった欠点がある(その代わりオンプレ版のガルーンでも動作可能という長所あり)。
 
 本プログラムであれば実行するのは自分自身なので、予備カレンダーの外部共有オプションを変更することなくGaroonからGoogleカレンダーへの同期ができ、またGAS上で動くので自分でマシンを用意する必要がない。
@@ -253,10 +246,6 @@ Googleカレンダーのほうが意外とすぐに制限に引っかかるの�
 
 - [**Garoon REST APIの共通仕様 – cybozu developer network**](https://developer.cybozu.io/hc/ja/articles/360000503306)
     
-    [](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cpath fill='%2336b' d='M5.002 1.01h7v7l-2-2-3 2v-1l3-2.25 1 1V2.01h-3.75l1 1-2.25 3h-1l2-3z'/%3E%3Cpath fill='%2336b' d='M7.002 3.01h-5v8h8v-5h-1v4h-6v-6h4z'/%3E%3Cpath fill='%2315a5ea' d='M4.082 5.51c0-.621.621-.621.621-.621 1.864.621 3.107 1.864 3.728 3.728 0 0 0 .621-.62.621-1.245-1.864-1.866-2.485-3.73-3.728z'/%3E%3C/svg%3E)
-    
 - [**予定の取得（GET） – cybozu developer network**](https://developer.cybozu.io/hc/ja/articles/360000440583)
-    
-    [](data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cpath fill='%2336b' d='M5.002 1.01h7v7l-2-2-3 2v-1l3-2.25 1 1V2.01h-3.75l1 1-2.25 3h-1l2-3z'/%3E%3Cpath fill='%2336b' d='M7.002 3.01h-5v8h8v-5h-1v4h-6v-6h4z'/%3E%3Cpath fill='%2315a5ea' d='M4.082 5.51c0-.621.621-.621.621-.621 1.864.621 3.107 1.864 3.728 3.728 0 0 0 .621-.62.621-1.245-1.864-1.866-2.485-3.73-3.728z'/%3E%3C/svg%3E)
     
 - [**スケジュールオブジェクト – cybozu developer network**](https://developer.cybozu.io/hc/ja/articles/115005314266)
