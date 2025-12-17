@@ -39,7 +39,13 @@ function syncGroonSchedule() {
 
   for(const event of events){
     let uniqueid = getGaroonUniqueEventID(event);
-    console.log(["GAROON EVENT", event.subject, event.start.dateTime, event.updatedAt, uniqueid]);
+    console.log(["GAROON EVENT", event.subject, event.start.dateTime, event.updatedAt, uniqueid, event.visibilityType]);
+
+    if(event.visibilityType !== 'PUBLIC') {
+      // 公開日程以外はスキップ
+      console.log("SKIPPED: NOT PUBLIC");
+      continue;
+    }
 
     const gcalexistingevent = gcalexistingevents.find((e) => e.getTag(TAG_GAROON_UNIQUE_EVENT_ID) === uniqueid);
     if(gcalexistingevent){
